@@ -33,15 +33,15 @@ dependencies {
 
 application {
 
-    mainClass = 'com.goit.fry.hibernate.Client'
+    mainClass = 'com.goit.fry.hibernate.FlywayMigration'
 }
 
 flyway {
 
-    url = "jdbc:h2:$rootDir/spacetravel"
+    url = "jdbc:h2:file:$rootDir/spacetravel"
+    user = "sa"
     baselineOnMigrate = true
-    schemas = ['spacetravel']
-    locations = ["filesystem:$rootDir/migration"]
+    locations = ["filesystem:$rootDir/src/main/resources/migration"]
     cleanDisabled = false
 }
 

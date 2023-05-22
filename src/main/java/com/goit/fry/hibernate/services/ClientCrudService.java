@@ -6,13 +6,11 @@ import org.hibernate.Transaction;
 import com.goit.fry.hibernate.HibernateUtil;
 import com.goit.fry.hibernate.entities.Client;
 
-import java.util.List;
-
 public class ClientCrudService {
 
 	public Client create(String clientName) {
 
-		Client client = new Client(clientName);
+		Client client = Client.builder().name(clientName).build();
 		try(Session session = HibernateUtil.getInst().getSessionFactory().openSession()) {
 
 			Transaction transaction = session.beginTransaction();
@@ -22,7 +20,7 @@ public class ClientCrudService {
 		return client;
 	}
 
-	public Client read(long id) {
+	public Client readById(long id) {
 
 		Client client;
 		try(Session session = HibernateUtil.getInst().getSessionFactory().openSession()) {
@@ -34,7 +32,7 @@ public class ClientCrudService {
 
 	public void update(long id, String newName) {
 
-		Client client = new Client(id, newName);
+		Client client = Client.builder().id(id).name(newName).build();
 		try(Session session = HibernateUtil.getInst().getSessionFactory().openSession()) {
 
 			Transaction transaction = session.beginTransaction();
@@ -45,17 +43,12 @@ public class ClientCrudService {
 
 	public void delete(long id) {
 
-		Client client = new Client(id);
+		Client client = Client.builder().id(id).build();
 		try(Session session = HibernateUtil.getInst().getSessionFactory().openSession()) {
 
 			Transaction transaction = session.beginTransaction();
 			session.remove(client);
 			transaction.commit();
 		}
-	}
-
-	public List<Client> listAll() {
-
-		return null;
 	}
 }

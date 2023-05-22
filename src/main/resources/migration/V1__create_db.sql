@@ -10,6 +10,7 @@ CREATE TABLE clients(
 CREATE TABLE planets(
  id CHAR(10) NOT NULL PRIMARY KEY,
  name VARCHAR(500) NOT NULL,
+ CONSTRAINT planet_id_capital_only CHECK (UPPER(id) = id),
  CONSTRAINT planet_name_min_length CHECK (char_length(name) >= 1));
 
 CREATE TABLE tickets(

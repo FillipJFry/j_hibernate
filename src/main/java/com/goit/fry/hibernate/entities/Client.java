@@ -2,6 +2,7 @@ package com.goit.fry.hibernate.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Client {
 
 	@Id
@@ -17,14 +19,4 @@ public class Client {
 	private long id;
 	@Column(name="name", length = 200)
 	private String name;
-
-	public Client(long id) {
-
-		this.id = id;
-	}
-
-	public Client(String name) {
-
-		this.name = name;
-	}
 }

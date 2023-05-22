@@ -2,7 +2,7 @@ package com.goit.fry.hibernate.services;
 
 import com.goit.fry.hibernate.FlywayMigration;
 import com.goit.fry.hibernate.HibernateUtil;
-import com.goit.fry.hibernate.entities.Client;
+import com.goit.fry.hibernate.entities.Planet;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,9 +13,8 @@ import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ClientCrudServiceTest {
-
-	private ClientCrudService srv;
+class PlanetCrudServiceTest {
+	private PlanetCrudService srv;
 
 	@BeforeAll
 	static void init() {
@@ -34,49 +33,49 @@ class ClientCrudServiceTest {
 	@BeforeEach
 	void initSrv() {
 
-		srv = new ClientCrudService();
+		srv = new PlanetCrudService();
 	}
 
 	@Test
 	void createDoesNotThrow() {
 
-		assertDoesNotThrow(() -> srv.create("John Doe"));
+		assertDoesNotThrow(() -> srv.create("PLT", "Pluto"));
 	}
 
 	@Test
 	void createReturnsCorrectObj() {
 
-		Client client = srv.create("Alice");
+		Planet planet = srv.create("SAT", "Saturn");
 
-		assertNotNull(client);
-		assertTrue(client.getId() >= 0);
-		assertEquals("Alice", client.getName());
+		assertNotNull(planet);
+		assertEquals("SAT", planet.getId());
+		assertEquals("Saturn", planet.getName());
 	}
 
 	@Test
 	void read() {
 
-		long id = srv.create("Bob").getId();
-		Client client = srv.readById(id);
+		String id = srv.create("NEPT", "Neptune").getId();
+		Planet planet = srv.readById(id);
 
-		assertEquals(id, client.getId());
-		assertEquals("Bob", client.getName());
+		assertEquals(id, planet.getId());
+		assertEquals("Neptune", planet.getName());
 	}
 
 	@Test
 	void update() {
 
-		long id = srv.create("Eve").getId();
-		srv.update(id, "Trent");
-		Client client = srv.readById(id);
+		String id = srv.create("XYZ", "Omuamua").getId();
+		srv.update(id, "Nibiru");
+		Planet planet = srv.readById(id);
 
-		assertEquals("Trent", client.getName());
+		assertEquals("Nibiru", planet.getName());
 	}
 
 	@Test
 	void delete() {
 
-		long id = srv.create("Mallory").getId();
+		String id = srv.create("CLST", "Callisto").getId();
 		assertDoesNotThrow(() -> srv.delete(id));
 		assertNull(srv.readById(id));
 	}

@@ -7,7 +7,7 @@ import org.hibernate.cfg.Configuration;
 
 public class HibernateUtil {
 
-	private static final HibernateUtil inst = new HibernateUtil();
+	private static HibernateUtil inst;
 
 	@Getter
 	private final SessionFactory sessionFactory;
@@ -23,11 +23,15 @@ public class HibernateUtil {
 
 	public static HibernateUtil getInst() {
 
+		if (inst == null) inst = new HibernateUtil();
 		return inst;
 	}
 
-	public void close() {
+	public static void close() {
 
-		sessionFactory.close();
+		if (inst != null) {
+			inst.sessionFactory.close();
+			inst = null;
+		}
 	}
 }
